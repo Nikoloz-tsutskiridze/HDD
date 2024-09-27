@@ -1,4 +1,4 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
@@ -39,6 +39,13 @@ function CabinTable() {
   });
 
   if (isLoading) return <Spinner />;
+
+  if (error) return <div>Error loading cabins: {error.message}</div>;
+
+  // Check if cabins exist and if there are any cabins to display
+  if (!cabins.length) {
+    return <div>No cabins available.</div>;
+  }
 
   return (
     <Table role="table">

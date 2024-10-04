@@ -58,11 +58,23 @@ export async function createEditCabin(newCabin, id) {
 }
 
 export async function deleteCabin(id) {
+  // First delete related bookings
+  const { error: bookingError } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("cabinId", id);
+
+  if (bookingError) {
+    console.error("Error deleting bookings:", bookingError.message);
+    throw new Error(`Bookings could not be deleted: ${bookingError.message}`);
+  }
+
+  // Now delete the cabin
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
 
   if (error) {
-    console.error("Error deleting cabin:", error);
-    throw new Error("Cabins could not be Deleted");
+    console.error("Error deleting cabin:", error.message);
+    throw new Error(`Cabin could not be deleted: ${error.message}`);
   }
 
   return data;

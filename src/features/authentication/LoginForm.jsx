@@ -7,14 +7,22 @@ import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
-  const [email, setEmail] = useState("nikoloz.tsutskiridze11@gmail.com");
-  const [password, setPassword] = useState("12345");
-  const { login, isPending } = useLogin();
+  const [email, setEmail] = useState("nikacucqiridze2000@gmail.com");
+  const [password, setPassword] = useState("12345678");
+  const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
   }
 
   return (
@@ -27,7 +35,7 @@ function LoginForm() {
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          disabled={isPending}
+          disabled={isLoading}
         />
       </FormRowVertical>
 
@@ -38,12 +46,12 @@ function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          disabled={isPending}
+          disabled={isLoading}
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button size="large" disabled={isPending}>
-          {!isPending ? "Login in" : <SpinnerMini />}
+        <Button size="large" disabled={isLoading}>
+          {!isLoading ? "Login in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
     </Form>

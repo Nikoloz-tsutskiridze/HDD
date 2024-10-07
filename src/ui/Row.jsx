@@ -9,13 +9,12 @@ const Row = styled.div`
       justify-content: space-between;
       align-items: center;
     `}
-
   ${(props) =>
     props.type === "vertical" &&
     css`
       flex-direction: column;
       gap: 1.6rem;
-    `}
+    `};
 `;
 
 Row.defaultProps = {

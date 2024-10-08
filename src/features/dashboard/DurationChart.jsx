@@ -143,13 +143,13 @@ function prepareData(startData, stays) {
 
 function DurationChart({ confirmedStays }) {
   const { isDarkMode } = useDarkMode();
-  const startDate = isDarkMode ? startDataDark : startDataLight;
-  const data = prepareData(startDate, confirmedStays);
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays);
 
   return (
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={240}>
         <PieChart>
           <Pie
             data={data}
@@ -159,7 +159,7 @@ function DurationChart({ confirmedStays }) {
             outerRadius={110}
             cx="40%"
             cy="50%"
-            paddingAngle={4}
+            paddingAngle={3}
           >
             {data.map((entry) => (
               <Cell
